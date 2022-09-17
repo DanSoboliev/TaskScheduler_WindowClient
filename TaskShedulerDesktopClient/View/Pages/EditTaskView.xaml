@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="TaskShedulerDesktopClient.View.Pages.EditTaskView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:conv="clr-namespace:TaskShedulerDesktopClient.Styles.Converters"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="595" d:DesignWidth="590" Padding="20">
+    <UserControl.Resources>
+        <conv:StateToStringConverter x:Key="stateToStringConverter"/>
+        <conv:StateToLetterConverter x:Key="stateToLetterConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <StackPanel>
+                <TextBox Text="{Binding AssignmentName}" materialDesign:HintAssist.Hint="Назва" FontSize="20"/>
+                <TextBlock Text="{Binding errorInfo.AssignmentName}" Style="{StaticResource ErrorRegMes}"/>
+            </StackPanel>
+
+            <StackPanel Margin="0 20 0 0">
+                <TextBlock Text="Дедлайн" FontSize="16"/>
+                <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
+                    <DatePicker Height="40" VerticalContentAlignment="Center"  SelectedDate="{Binding AssignmentDate}" IsTodayHighlighted="True" Name="LocaleDatePicker"
+  Width="100"
+  materialDesign:HintAssist.Hint="Дата"
+  materialDesign:TextFieldAssist.HasClearButton="True"
+  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Bottom"/>
+                    <materialDesign:TimePicker VerticalAlignment="Bottom" Height="40" SelectedTime="{Binding AssignmentTime}" Margin="30 0 0 0"
+  materialDesign:HintAssist.Hint="Час"
+  Is24Hours="True"
+  x:Name="WithSecondsTimePicker"
+  WithSeconds="True"
+  Width="100" />
+                </StackPanel>
+                <TextBlock Text="{Binding errorInfo.AssignmentTime}" Style="{StaticResource ErrorRegMes}"/>
+            </StackPanel>
+
+            <StackPanel Margin="0 20 0 0">
+                <TextBlock Text="Опис" FontSize="16"/>
+                <TextBox Text="{Binding AssignmentDescription}" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0 20 0 0" Height="100" materialDesign:HintAssist.Hint="Це є опис завдання" Cursor="Arrow"/>
+                <TextBlock Text="{Binding errorInfo.AssignmentDescription}" Style="{StaticResource ErrorRegMes}"/>
+            </StackPanel>
+
+            <StackPanel Margin="0 20 0 0">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Style="{StaticResource MaterialDesignActionDarkCheckBox}"
+                              HorizontalAlignment="Left" 
+                              IsChecked="{Binding AssignmentState, TargetNullValue=False, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              Command="{Binding CheckStateInForm}"
+                              Content="{Binding AssignmentState, Converter={StaticResource stateToLetterConverter}}"/>
+                    <TextBlock Text="{Binding AssignmentState, Converter={StaticResource stateToStringConverter}}" VerticalAlignment="Center" Margin="10 0 0 0" FontSize="16"/>
+                </StackPanel>
+                <TextBlock Text="{Binding errorInfo.AssignmentState}" Style="{StaticResource ErrorRegMes}"/>
+            </StackPanel>
+
+            <StackPanel Margin="0 20 0 0">
+                <TextBlock Text="{Binding errorInfo.ServerError}" Style="{StaticResource ErrorRegMes}" TextAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Style="{StaticResource MaterialDesignFlatDarkButton}" Margin="0 0 30 0" Command="{Binding EditAssignment}" ToolTip="Зберегти">
+                <materialDesign:PackIcon Kind="ContentSaveCheckOutline" Height="20" Width="20"/>
+            </Button>
+            <Button Style="{StaticResource MaterialDesignFlatDarkButton}" Margin="0 0 30 0" Command="{Binding RollbacklEditAssignment}" ToolTip="Скасувати">
+                <materialDesign:PackIcon Kind="CloseThick" Height="20" Width="20"/>
+            </Button>
+            <Button Style="{StaticResource MaterialDesignFlatDarkButton}" Margin="0 0 30 0" Command="{Binding DeleteAssignment}" ToolTip="Видалити">
+                <materialDesign:PackIcon Kind="Delete" Height="20" Width="20"/>
+            </Button>
+            <Button Style="{StaticResource MaterialDesignFlatDarkButton}" Command="{Binding CopyAssignment}" ToolTip="Копіювати">
+                <materialDesign:PackIcon Kind="ContentCopy" Height="20" Width="20"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

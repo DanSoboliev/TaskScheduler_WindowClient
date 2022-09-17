@@ -1,0 +1,116 @@
+﻿<Window x:Class="TaskShedulerDesktopClient.View.Windows.RegistrationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:localB="clr-namespace:TaskShedulerDesktopClient.Core"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Title="RegistrationWindow" Height="650" Width="1000"
+        WindowStyle="None" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        Background="Transparent">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border Background="#38bbeb" Padding="30" CornerRadius="25 0 0 25" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+            <StackPanel VerticalAlignment="Center">
+                <Image Source="/Images/Logo/GigaBruhLogo.png" Width="160" Margin="0 0 0 40"/>
+                <TextBlock Text="GigaBruh" FontSize="28" FontWeight="SemiBold" Foreground="#363636" TextAlignment="Center"/>
+                <TextBlock Text="We are future! Join us" TextWrapping="Wrap" FontSize="16" TextAlignment="Center" Foreground="#363636" Margin="0 20 0 20"/>
+                <Button Content="" FontFamily="Segoe MDL2 Assets" FontSize="28" FontWeight="Bold" Foreground="#38bbeb" VerticalContentAlignment="Center" Style="{StaticResource LeftContainerRegButton}" Height="60" Width="60" Command="{Binding applicationCommands.GoToWebsite}"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Column="1" Background="#ffffff" Padding="20" CornerRadius="0 25 25 0" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+            <Grid>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <Button FontFamily="Segoe MDL2 Assets" Content="" FontSize="20" Style="{DynamicResource WindowButton}" Margin="10 0 0 0"
+                            Command="{Binding applicationCommands.MinimizedWinwow}" CommandParameter="{Binding window}"/>
+                    <Button FontFamily="Segoe MDL2 Assets" Content="" FontSize="20" Style="{DynamicResource WindowButton}" Margin="10 0 0 0"
+                            Command="{Binding applicationCommands.CloseWinwow}" CommandParameter="{Binding window}"/>
+                </StackPanel>
+
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Style="{StaticResource RegTextBlockStyle}" Text="Username"/>
+                    <TextBlock Grid.Row="1" Style="{StaticResource RegTextBlockStyle}" Text="Email"/>
+                    <TextBlock Grid.Row="2" Style="{StaticResource RegTextBlockStyle}" Text="Password"/>
+                    <TextBlock Grid.Row="3" Style="{StaticResource RegTextBlockStyle}" Text="Confirm password"/>
+
+                    <StackPanel Grid.Column="1" Grid.Row="0" Margin="0 20 0 10">
+                        <TextBox Text="{Binding UserName}" materialDesign:HintAssist.Hint="user1998"/>
+                        <TextBlock Text="{Binding errorInfo.UserName}" Style="{StaticResource ErrorRegMes}"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="0 20 0 10">
+                        <TextBox Text="{Binding Email}" materialDesign:HintAssist.Hint="user123@gmail.com"/>
+                        <TextBlock Text="{Binding errorInfo.UserEmail}" Style="{StaticResource ErrorRegMes}"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Grid.Row="2" Margin="0 20 0 10">
+                        <PasswordBox Grid.Column="1" Grid.Row="2" materialDesign:HintAssist.Hint="qwerty789">
+                            <i:Interaction.Behaviors>
+                                <localB:DependecyPropertyBehavior 
+                                    UpdateEvent="PasswordChanged"
+                                    Property="Password"
+                                    Binding="{Binding Password}"/>
+                            </i:Interaction.Behaviors>
+                        </PasswordBox>
+                        <TextBlock Text="{Binding errorInfo.UserPassword}" Style="{StaticResource ErrorRegMes}"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Grid.Row="3" Margin="0 20 0 10">
+                        <PasswordBox Grid.Column="1" Grid.Row="3" materialDesign:HintAssist.Hint="qwerty789">
+                            <i:Interaction.Behaviors>
+                                <localB:DependecyPropertyBehavior 
+                                    UpdateEvent="PasswordChanged"
+                                    Property="Password"
+                                    Binding="{Binding ConfirmPassword}"/>
+                            </i:Interaction.Behaviors>
+                        </PasswordBox>
+                        <TextBlock Text="{Binding errorInfo.ConfirmPassword}" Style="{StaticResource ErrorRegMes}"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Horizontal" Margin="0 20 0 0">
+                        <CheckBox
+                            IsChecked="{Binding AgreeTermsOfUse}"
+                            Content=""
+                            materialDesign:CheckBoxAssist.CheckBoxSize="20"/>
+                        <TextBlock Foreground="#363636">Я погоджуюся з умовами <Hyperlink Foreground="#38bbeb" Command="{Binding applicationCommands.GoToTermsOfUse}">Користувацької угоди</Hyperlink></TextBlock>
+                    </StackPanel>
+
+                    <ProgressBar Grid.Row="5" Grid.Column="0" Margin="120 30 0 0" Style="{StaticResource MaterialDesignCircularProgressBar}" IsIndeterminate="{Binding ShowLoading}"/>
+
+                    <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="0 30 0 0">
+                        <Button Content="Зареєструватися" Command="{Binding Registration}" Style="{StaticResource MaterialDesignFlatMidBgButton}" Margin="0 0 30 0"/>
+                        <Button Content="Назад" Command="{Binding ReturnToAuthorizationView}" CommandParameter="{Binding window}" Style="{StaticResource MaterialDesignOutlinedButton}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="6" Grid.Column="1" Margin="0 10 0 0">
+                        <TextBlock Style="{StaticResource ErrorRegMes}" Text="{Binding errorInfo.ServerError}"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

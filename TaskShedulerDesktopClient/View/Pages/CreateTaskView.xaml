@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="TaskShedulerDesktopClient.View.Pages.CreateTaskView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="595" d:DesignWidth="590" Padding="20">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="Нове завдання" FontSize="28" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontWeight="Light"/>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1">
+            <StackPanel>
+                <TextBlock Text="Назва" FontSize="16"/>
+                <TextBox Text="{Binding AssignmentName}" Margin="0 20 0 0"/>
+                <TextBlock Text="{Binding errorInfo.AssignmentName}" Style="{StaticResource ErrorRegMes}"/>
+            </StackPanel>
+
+            <StackPanel Margin="0 20 0 0">
+                <TextBlock Text="Дедлайн" FontSize="16"/>
+                <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
+                    <DatePicker Height="40" SelectedDate="{Binding AssignmentDate}" IsTodayHighlighted="True" Name="LocaleDatePicker"
+  Width="100"
+  materialDesign:HintAssist.Hint="Дата"
+  materialDesign:TextFieldAssist.HasClearButton="True"
+  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Bottom"/>
+                    <materialDesign:TimePicker VerticalAlignment="Bottom" Height="40" SelectedTime="{Binding AssignmentTime}" Margin="30 0 0 0"
+  materialDesign:HintAssist.Hint="Час"
+  Is24Hours="True"
+  x:Name="WithSecondsTimePicker"
+  WithSeconds="True"
+  Width="100" />
+                </StackPanel>
+                <TextBlock Text="{Binding errorInfo.AssignmentTime}" Style="{StaticResource ErrorRegMes}"/>
+            </StackPanel>
+
+            <StackPanel Margin="0 20 0 0">
+                <TextBlock Text="Опис" FontSize="16"/>
+                <TextBox Text="{Binding AssignmentDescription}" Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="100" materialDesign:HintAssist.Hint="Це є опис завдання" Margin="0 20 0 0"/>
+                <TextBlock Text="{Binding errorInfo.AssignmentDescription}" Style="{StaticResource ErrorRegMes}"/>
+            </StackPanel>
+            
+            <StackPanel Margin="0 50 0 0">
+                <TextBlock Text="{Binding errorInfo.ServerError}" Style="{StaticResource ErrorRegMes}" TextAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Margin="0 0 60 0" Command="{Binding CreateAssignment}">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Check" VerticalAlignment="Center" Margin="0 0 5 0"/>
+                    <TextBlock Text="Створити" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource MaterialDesignOutlinedButton}" Command="{Binding CleanCreateAssignment}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Очистити" VerticalAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="Vacuum" VerticalAlignment="Center" Margin="5 0 0 0"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>
